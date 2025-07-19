@@ -30,3 +30,5 @@ public class Homework1_2 {
         } else System.out.println(nichya);
     }
 }
+
+//Знаю, что можно сократить решение, но пока изучаю основы
