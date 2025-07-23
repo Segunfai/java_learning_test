@@ -22,9 +22,13 @@ public class TV {
         System.out.println("Телевизор " + (mode ? "включен" : "выключен"));
     }
 
-    public void setBrand(String tvBrand) {
-        if (tvBrand != null && !tvBrand.isEmpty()) {
-            brand = tvBrand;
+    public void setBrand() {
+
+        Scanner vvodBrand = new Scanner(System.in);
+        System.out.println("Введите бренд телевизора: ");
+        String brandim = vvodBrand.nextLine();
+        if (brandim != null && !brandim.isEmpty()) {
+            brand = brandim;
         } else {
             System.out.println("Марка телевизора неопознана!");
         }
@@ -37,8 +41,13 @@ public class TV {
     }
 
     public void settings() {
-        Scanner vvodBrand = new Scanner(System.in);
-        System.out.println(vvodBrand);
+        System.out.println("Бренд: " + brandim);
+
+        Random harakter = new Random();
+        int kakoy = harakter.nextInt(model.length);
+        System.out.println("Модель: " + kakoy);
+
+
 
     }
 
