@@ -30,7 +30,7 @@ public class TV {
         }else mute = true;
     }
 
-    /*
+  /*
     public void setBrand() {
 
         Scanner vvodBrand = new Scanner(System.in);
