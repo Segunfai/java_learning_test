@@ -7,34 +7,34 @@ public class App {
 
     public static void main(String[] args) {
 
+        //Создаем новый телек
+        TV newTv = new TV("Testovyi", "Abra-kadabra OS");
+
         //Включаем
-        TV newTv = new TV();
         newTv.power();
 
         //Показываем информацию о телевизоре
-        TV info = new TV();
-        info.setBrand();
-
-        info.settings();
+        newTv.settings();
 
         //Тыкаем случайный канал
         int sKanal = TV.randomChannel();
         System.out.println("Случайный канал: " + sKanal);
-
         TV.randomChannel();
+
         //Включаем / выключаем звук
-        TV mute = new TV();
-        mute.zvuk();
+        newTv.zvuk();
 
-        TV sledKanal = new TV();
-        sledKanal.nextKanal();
 
-        TV predKanal = new TV();
-        predKanal.prevKanal();
+        newTv.nextKanal();
 
-        TV whatKanal = new TV();
-        whatKanal.tekKanalInfo();
+        newTv.prevKanal();
 
+        newTv.tekKanalInfo();
+
+        //Выключаем
         newTv.power();
+
+        //Пробуем тыкнуть следующий канал
+        newTv.nextKanal();
     }
 }

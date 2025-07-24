@@ -16,12 +16,21 @@ public class TV {
     public String switchOff;
     private boolean mode = false;
 
+    public TV(String brand, String operSystem) {
+        this.brand = brand;
+        this.operSystem = operSystem;
+        this.serialNumber = serNumGen();
+    }
 
     public void power() {
         mode = !mode;
         System.out.println("Телевизор " + (mode ? "включен" : "выключен"));
+        if (!mode) { // Если ТВ выключили
+            mute = true; // Принудительно выключаем звук
+        }else mute = true;
     }
 
+    /*
     public void setBrand() {
 
         Scanner vvodBrand = new Scanner(System.in);
@@ -33,6 +42,12 @@ public class TV {
             System.out.println("Марка телевизора неопознана!");
         }
     }
+    */
+
+    private String serNumGen() {
+        Random random = new Random();
+        return "SN-" + random.nextInt(10000); // Например: SN-1234
+    }
 
     public static int randomChannel() {
         Random ranChan = new Random();
@@ -40,6 +55,7 @@ public class TV {
         return channels[randomize];
     }
 
+    /*
     public void setOs() {
 
         Scanner vvodOs = new Scanner(System.in);
@@ -51,12 +67,25 @@ public class TV {
             System.out.println("Операционная система телевизора неопознана!");
         }
     }
+    */
 
     public void zvuk() {
-        mute = !mute;
-        System.out.println("Звук " + (mute ? "включен" : "выключен"));
+        if (mode) {
+            mute = !mute;
+            System.out.println("Звук " + (mute ? "выключен" : "включен"));
+        } else {
+            System.out.println("Сначала включите телевизор!");
+        }
     }
 
+    public void settings() {
+        System.out.println("=== Настройки ===");
+        System.out.println("Бренд: " + brand);
+        System.out.println("ОС: " + operSystem);
+        System.out.println("Модель: " + model[new Random().nextInt(model.length)]);
+        System.out.println("Серийник: " + serialNumber);
+    }
+    /*
     public void settings() {
         System.out.println("Бренд: " + brand);
         System.out.println("Операционная система: " + operSystem);
@@ -64,9 +93,8 @@ public class TV {
         int kakoy = harakter.nextInt(model.length);
         String display = model[kakoy];
         System.out.println("Модель: " + display);
-        serialNumber = "Секретная информация";
-        System.out.println(serialNumber);
     }
+    */
 
     public void nextKanal() {
         if (!mode) {
@@ -95,5 +123,6 @@ public class TV {
         }
         System.out.println("Сейчас на телевизоре включен канал: " + channels[tekKanal]);
     }
+
 }
 
