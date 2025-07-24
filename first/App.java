@@ -12,6 +12,7 @@ public class App {
 
         //Включаем
         newTv.power();
+        System.out.println("Вас приветствует тестовый ТВ!");
 
         //Показываем информацию о телевизоре
         newTv.settings();
@@ -24,7 +25,6 @@ public class App {
         //Включаем / выключаем звук
         newTv.zvuk();
 
-
         newTv.nextKanal();
 
         newTv.prevKanal();
@@ -36,5 +36,8 @@ public class App {
 
         //Пробуем тыкнуть следующий канал
         newTv.nextKanal();
+
+        //Пробуем включить звук на выключенном телеке
+        newTv.zvuk();
     }
 }
