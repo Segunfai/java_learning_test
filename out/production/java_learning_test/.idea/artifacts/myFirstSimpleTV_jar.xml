@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="myFirstSimpleTV:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/myFirstSimpleTV_jar</output-path>
+    <root id="archive" name="java_learning_test.jar">
+      <element id="module-output" name="java_learning_test" />
+    </root>
+  </artifact>
+</component>
