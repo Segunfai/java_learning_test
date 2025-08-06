@@ -8,7 +8,7 @@ public class Person {
     //Объявляем характеристики человека
     private final String name;
     private int money;
-    private final List<Products> products;
+    private final List<Products> produkty;
 
     //Объявляем конструктор
     public Person (String name, int money) {
@@ -22,7 +22,7 @@ public class Person {
         //Инициализация полей и пустого списка покупок
         this.name = name;
         this.money = money;
-        this.products = new ArrayList<>();
+        this.produkty = new ArrayList<>();
 
     }
 
@@ -34,13 +34,53 @@ public class Person {
     public int getMoney() {
         return money;
     }
-
-    public List<Products> getProducts() {
-        return products;
+    //Создаем пустой список покупок - корзину
+    public List<Products> getProdukty() {
+        return produkty;
     }
 
+    //Добавляем метод покупки продуктов
+    public void pokupka(Products pokupka) {
+        //Проверка на null
+        if (pokupka == null)  {
+            throw new IllegalArgumentException("Продукт не может быть несуществующим или null");
+        }
+        //Если средств хватает, то добавляем продукт в список
+        if (money >= pokupka.getCost()) {
+            produkty.add(pokupka);
+            //Уменьшаем количество денег на стоимость продуктв
+            money -= pokupka.getCost();
+            //Выводим сообщение о покупке
+            System.out.println(name + " купил " + pokupka.getNaimenovanie());
+        } else {
+            //Либо сообщение, что человек не может купить продукт
+            System.out.println(name + "не может позволить себе" + pokupka.getNaimenovanie());
+        }
+    }
+
+    //Добавлен метод для возвращения человека и его средств
+    public String getMoneyInfo() {
+        return name + " = " + money + " руб.)";
+    }
+
+    //Добавляем переопределение в строку для человека, который ничего не купил
     @Override
     public String toString() {
-        return name + " = " + money + " руб.)";
+        if(produkty.isEmpty()) {
+            System.out.println(name + "- Ничего не куплено");
+        }
+        return name + "- " + produkty;
+    }
+    // Переопределение equals() и hashCode()
+    public boolean equals(Object produkt_obj) {
+        if (this == produkt_obj) return true;
+        if (produkt_obj == null || getClass() != produkt_obj.getClass()) return false;
+        Person person = (Person) produkt_obj;
+        return money == person.money && Objects.equals(name, person.name);
+    }
+    //Переопределяем хэшкоды с теми же полями, что и в сравнении
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, money);
     }
 }
