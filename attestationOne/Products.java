@@ -31,7 +31,7 @@ public class Products {
     //Переопределяем все в строку
     @Override
     public String toString() {
-        return naimenovanie + " = " + cost + " руб.)";
+        return naimenovanie;
     }
     //Сравниваем значения
     @Override

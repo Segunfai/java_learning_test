@@ -66,10 +66,11 @@ public class Person {
     //Добавляем переопределение в строку для человека, который ничего не купил
     @Override
     public String toString() {
-        if(produkty.isEmpty()) {
-            System.out.println(name + "- Ничего не куплено");
+        if (produkty.isEmpty()) {
+            return name + " - Ничего не куплено";
         }
-        return name + "- " + produkty;
+        String result = produkty.toString();
+        return name + " - " + result.substring(1, result.length()-1);
     }
     // Переопределение equals() и hashCode()
     public boolean equals(Object produkt_obj) {

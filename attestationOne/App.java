@@ -98,6 +98,12 @@ public class App {
                     if (pokupka.isEmpty()) continue;
 
                     // Улучшенная проверка формата
+
+                    if (pokupka.contains(" ") && !pokupka.contains(" - ")) {
+                        System.out.println("Ошибка формата! Используйте 'Имя - Наименование'. Введено: '" + pokupka + "'");
+                        continue;
+                    }
+
                     if (!pokupka.contains(" - ")) {
                         System.out.println(pokupka + " ничего не купил");
                         continue;
@@ -113,10 +119,6 @@ public class App {
                         continue;
                     }
 
-                    if (naimenovanie.isEmpty()) {
-                        System.out.println(imya + " ничего не купил");
-                        continue;
-                    }
 
                     // Поиск покупателя и продукта
                     Person person = lyudi.stream()
@@ -141,6 +143,12 @@ public class App {
                     System.out.println("Поздравляем! Вы сломали магазин! '" + pokupka + "'. " + e.getMessage());
                 }
             }
+        }
+
+        // Вывод итогов
+        System.out.println("\nРезультаты покупок:\n");
+        for (Person person : lyudi) {
+            System.out.println(person);
         }
 
         System.out.println("\nСпасибо, что воспользовались нашим симулятором магазина!\nЖдем Вас снова!");
