@@ -89,7 +89,7 @@ public class App {
             if (vvod.equals("END")) break;
             if (vvod.isEmpty()) continue;  // Пропускаем пустые строки
 
-            // Разделяем покупки (поддерживаем оба формата ввода)
+            // Разделяем покупки с поддержкой разных форматов ввода
             String[] pokupki = vvod.contains(";") ? vvod.split(";") : new String[]{vvod};
 
             for (String pokupka : pokupki) {
@@ -99,7 +99,7 @@ public class App {
 
                     // Улучшенная проверка формата
                     if (!pokupka.contains(" - ")) {
-                        System.out.println("ОШИБКА: Используйте формат 'Имя - Наименование'. Получено: '" + pokupka + "'");
+                        System.out.println(pokupka + " ничего не купил");
                         continue;
                     }
 
@@ -110,6 +110,11 @@ public class App {
                     // Для кейса, когда человек ничего не покупает
                     if (naimenovanie.equalsIgnoreCase("ничего") || naimenovanie.equalsIgnoreCase("END")) {
                         System.out.println(imya + " ничего не покупает");
+                        continue;
+                    }
+
+                    if (naimenovanie.isEmpty()) {
+                        System.out.println(imya + " ничего не купил");
                         continue;
                     }
 
