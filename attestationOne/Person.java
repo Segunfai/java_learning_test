@@ -34,7 +34,7 @@ public class Person {
     public int getMoney() {
         return money;
     }
-    //Создаем пустой список покупок - корзину
+    //Получаем пустой список покупок - корзину
     public List<Products> getProdukty() {
         return produkty;
     }
