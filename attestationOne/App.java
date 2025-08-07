@@ -10,7 +10,7 @@ public class App {
         List<Person> lyudi = new ArrayList<>();
         List<Products> spisokpokupok  = new ArrayList<>();
 
-        System.out.println("Введите Имя покупателя и количество его денег в формате 'Имя = деньги'. Для завершения программы введите 'END'.");
+        System.out.println("Введите Имя покупателя и количество его денег в формате 'Имя = деньги; Имя = деньги'. Для завершения программы введите 'END'.");
         /* Моя изначальная версия
         while (true) {
             String vvod = magaz.nextLine();
@@ -64,6 +64,38 @@ public class App {
         }
 
         System.out.println("Введите покупки в формате 'Имя - наименование'. Для завершения введите 'END'.");
+        while (true) {
+            String vvod = magaz.nextLine();
+            if (vvod.equals("END")) break;
 
+            try {
+                String[] razdelenie = vvod.split(" = ");
+                if (razdelenie.length != 2)  {
+                    System.out.println("Ошибка формата! Введите данные в формате 'Имя - наименование'");
+                    continue;
+                }
+                String imya = razdelenie[0].trim();
+                String naimenovanie = razdelenie[1].trim();
+
+                Person person = lyudi.stream()
+                        .filter(p -> p.getName().equals(imya))
+                        .findFirst()
+                        .orElse(null);
+
+                Products product = spisokpokupok.stream()
+                        .filter(p -> p.getNaimenovanie().equals(naimenovanie))
+                        .findFirst()
+                        .orElse(null);
+
+                if (person == null || product == null) {
+                    System.out.println("Покупатель или продукт не найдены!");
+                } else {
+                    person.pokupka(product);
+                }
+            } catch (Exception e) {
+                System.out.println("Ошибка ввода! " + e.getMessage());
+            }
+        }
+        System.out.println("\n Спасибо, что воспользовались нашим симулятором магазина!\nЖдем Вас снова!");
     }
 }
