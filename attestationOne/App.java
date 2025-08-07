@@ -25,22 +25,33 @@ public class App {
         */
 
         // Дополнение от нейросети по формату "Имя = деньги"
+        System.out.println("Введите покупателей в формате 'Имя = деньги; Имя = деньги'. Для завершения введите 'END'.");
         while (true) {
             String vvod = magaz.nextLine();
             if (vvod.equals("END")) break;
 
-            try {
-                String[] razdelenie = vvod.split(" = ");
-                if (razdelenie.length != 2) {
-                    System.out.println("Ошибка формата! Используйте 'Имя = деньги'");
-                    continue;  // Пропускаем эту итерацию и запрашиваем ввод снова
+            // Разделяем строку по ";"
+            String[] osoby = vvod.split(";");
+            for (String osoba : osoby) {
+                try {
+                    osoba = osoba.trim();  // Удаляем лишние пробелы
+                    if (osoba.isEmpty()) continue;  // Пропускаем пустые части
+
+                    String[] razdelenie = osoba.split(" = ");
+                    if (razdelenie.length != 2) {
+                        System.out.println("Ошибка формата! Используйте 'Имя = деньги'");
+                        continue;
+                    }
+
+                    String imya = razdelenie[0].trim();
+                    int dengi = Integer.parseInt(razdelenie[1].trim());
+                    lyudi.add(new Person(imya, dengi));
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Ошибка! Деньги должны быть числом: " + osoba);
+                } catch (Exception e) {
+                    System.out.println("Ошибка ввода: " + e.getMessage());
                 }
-                String imya = razdelenie[0].trim();
-                int dengi = Integer.parseInt(razdelenie[1].trim());
-                lyudi.add(new Person(imya, dengi));
-            }
-            catch (NumberFormatException e) {
-                System.out.println("Ошибка! Деньги должны быть числом.");
             }
         }
 
