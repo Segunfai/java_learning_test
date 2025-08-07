@@ -54,7 +54,7 @@ public class Person {
             System.out.println(name + " купил " + pokupka.getNaimenovanie());
         } else {
             //Либо сообщение, что человек не может купить продукт
-            System.out.println(name + "не может позволить себе" + pokupka.getNaimenovanie());
+            System.out.println(name + " не может позволить себе " + pokupka.getNaimenovanie());
         }
     }
 

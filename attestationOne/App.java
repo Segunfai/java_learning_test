@@ -10,7 +10,7 @@ public class App {
         List<Person> lyudi = new ArrayList<>();
         List<Products> spisokpokupok  = new ArrayList<>();
 
-        System.out.println("Введите Имя покупателя и количество его денег в формате 'Имя = деньги; Имя = деньги'. Для завершения программы введите 'END'.");
+        System.out.println("Введите Имя покупателя и количество его денег в формате 'Имя = деньги; Имя = деньги'. \nДля завершения программы введите 'END'.");
         /* Моя изначальная версия
         while (true) {
             String vvod = magaz.nextLine();
@@ -25,19 +25,19 @@ public class App {
         */
 
         // Дополнение от нейросети по формату "Имя = деньги"
-        System.out.println("Введите покупателей в формате 'Имя = деньги; Имя = деньги'. Для завершения введите 'END'.");
+        System.out.println("Введите покупателей в формате 'Имя = деньги; Имя = деньги'. \nДля завершения введите 'END'.");
         while (true) {
             String vvod = magaz.nextLine();
             if (vvod.equals("END")) break;
 
             // Разделяем строку по ";"
-            String[] osoby = vvod.split(";");
-            for (String osoba : osoby) {
+            String[] ekzy = vvod.split(";");
+            for (String ekz : ekzy) {
                 try {
-                    osoba = osoba.trim();  // Удаляем лишние пробелы
-                    if (osoba.isEmpty()) continue;  // Пропускаем пустые части
+                    ekz = ekz.trim();  // Удаляем лишние пробелы
+                    if (ekz.isEmpty()) continue;  // Пропускаем пустые части
 
-                    String[] razdelenie = osoba.split(" = ");
+                    String[] razdelenie = ekz.split(" = ");
                     if (razdelenie.length != 2) {
                         System.out.println("Ошибка формата! Используйте 'Имя = деньги'");
                         continue;
@@ -48,65 +48,96 @@ public class App {
                     lyudi.add(new Person(imya, dengi));
 
                 } catch (NumberFormatException e) {
-                    System.out.println("Ошибка! Деньги должны быть числом: " + osoba);
+                    System.out.println("Ошибка! Деньги должны быть числом: " + ekz);
                 } catch (Exception e) {
                     System.out.println("Ошибка ввода: " + e.getMessage());
                 }
             }
         }
 
-        System.out.println("\nВведите список продуктов в формате 'Наименование = стоимость'. Для завершения введите 'END'.");
+        System.out.println("Введите продукты в формате 'Наименование = стоимость; Наименование = стоимость'. \nДля завершения введите 'END'.");
         while (true) {
             String vvod = magaz.nextLine();
             if (vvod.equals("END")) break;
 
-            try {
-                String[] razdelenie = vvod.split(" = ");
-                if (razdelenie.length != 2) {
-                    System.out.println("Ошибка формата! Введите данные в формате 'Наименование = стоимость'!");
-                    continue;
+            String[] produkty = vvod.split(";");
+            for (String produkt : produkty) {
+                try {
+                    produkt = produkt.trim();
+                    if (produkt.isEmpty()) continue;
+
+                    String[] razdelenie = produkt.split(" = ");
+                    if (razdelenie.length != 2) {
+                        System.out.println("Ошибка формата! Используйте 'Наименование = стоимость'");
+                        continue;
+                    }
+
+                    String nazvanie = razdelenie[0].trim();
+                    int cena = Integer.parseInt(razdelenie[1].trim());
+                    spisokpokupok.add(new Products(nazvanie, cena));
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Ошибка! Цена должна быть числом: " + produkt);
                 }
-                String naimenovanie = razdelenie[0].trim();
-                int cost = Integer.parseInt(razdelenie[1].trim());
-                spisokpokupok.add(new Products(naimenovanie, cost));
-            } catch (NumberFormatException e) {
-                System.out.println("Ошибка! Цена введена не числом!");
             }
         }
 
-        System.out.println("Введите покупки в формате 'Имя - наименование'. Для завершения введите 'END'.");
+        System.out.println("Введите покупки в формате 'Имя - Наименование' через разделитель или построчно.\nДля завершения введите 'END'.");
         while (true) {
-            String vvod = magaz.nextLine();
+            String vvod = magaz.nextLine().trim();  // trim сразу при чтении
+
             if (vvod.equals("END")) break;
+            if (vvod.isEmpty()) continue;  // Пропускаем пустые строки
 
-            try {
-                String[] razdelenie = vvod.split(" = ");
-                if (razdelenie.length != 2)  {
-                    System.out.println("Ошибка формата! Введите данные в формате 'Имя - наименование'");
-                    continue;
+            // Разделяем покупки (поддерживаем оба формата ввода)
+            String[] pokupki = vvod.contains(";") ? vvod.split(";") : new String[]{vvod};
+
+            for (String pokupka : pokupki) {
+                try {
+                    pokupka = pokupka.trim();
+                    if (pokupka.isEmpty()) continue;
+
+                    // Улучшенная проверка формата
+                    if (!pokupka.contains(" - ")) {
+                        System.out.println("ОШИБКА: Используйте формат 'Имя - Наименование'. Получено: '" + pokupka + "'");
+                        continue;
+                    }
+
+                    String[] razdelenie = pokupka.split(" - ", 2);  // Разделяем только по первому " - "
+                    String imya = razdelenie[0].trim();
+                    String naimenovanie = razdelenie.length > 1 ? razdelenie[1].trim() : "";
+
+                    // Для кейса, когда человек ничего не покупает
+                    if (naimenovanie.equalsIgnoreCase("ничего") || naimenovanie.equalsIgnoreCase("END")) {
+                        System.out.println(imya + " ничего не покупает");
+                        continue;
+                    }
+
+                    // Поиск покупателя и продукта
+                    Person person = lyudi.stream()
+                            .filter(p -> p.getName().equals(imya))
+                            .findFirst()
+                            .orElse(null);
+
+                    Products product = spisokpokupok.stream()
+                            .filter(p -> p.getNaimenovanie().equals(naimenovanie))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (person == null) {
+                        System.out.println("Покупатель '" + imya + "' не найден");
+                    } else if (product == null) {
+                        System.out.println("Продукт '" + naimenovanie + "' не найден");
+                    } else {
+                        person.pokupka(product);
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Поздравляем! Вы сломали магазин! '" + pokupka + "'. " + e.getMessage());
                 }
-                String imya = razdelenie[0].trim();
-                String naimenovanie = razdelenie[1].trim();
-
-                Person person = lyudi.stream()
-                        .filter(p -> p.getName().equals(imya))
-                        .findFirst()
-                        .orElse(null);
-
-                Products product = spisokpokupok.stream()
-                        .filter(p -> p.getNaimenovanie().equals(naimenovanie))
-                        .findFirst()
-                        .orElse(null);
-
-                if (person == null || product == null) {
-                    System.out.println("Покупатель или продукт не найдены!");
-                } else {
-                    person.pokupka(product);
-                }
-            } catch (Exception e) {
-                System.out.println("Ошибка ввода! " + e.getMessage());
             }
         }
-        System.out.println("\n Спасибо, что воспользовались нашим симулятором магазина!\nЖдем Вас снова!");
+
+        System.out.println("\nСпасибо, что воспользовались нашим симулятором магазина!\nЖдем Вас снова!");
     }
 }
