@@ -10,7 +10,7 @@ public class App {
         List<Person> lyudi = new ArrayList<>();
         List<Products> spisokpokupok  = new ArrayList<>();
 
-        System.out.println("Введите Имя покупателя и количество его денег в формате 'Имя = деньги; Имя = деньги'. \nДля завершения программы введите 'END'.");
+        // System.out.println("Введите Имя покупателя и количество его денег в формате 'Имя = деньги; Имя = деньги'. \nДля завершения программы введите 'END'.");
         /* Моя изначальная версия
         while (true) {
             String vvod = magaz.nextLine();
